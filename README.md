@@ -1,5 +1,7 @@
 # chocopuppet
 
+chocopuppet is a Docker Windows Container with Chocolatey and Puppet preinstalled
+
 LATEST VERSION:  
 v0.1 - 2018-10-29
 
