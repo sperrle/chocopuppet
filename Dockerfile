@@ -21,10 +21,11 @@
 
 
 # SET ARG for easy change of version on new build
+ARG OS="windowsservercore"
 ARG VERSION="1803"
 
 # FROM using ARG
-FROM microsoft/windowsservercore:$VERSION
+FROM microsoft/$OS:$VERSION
 
 
 
