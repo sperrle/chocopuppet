@@ -3,6 +3,16 @@ chocopuppet is a Docker Windows Container with Chocolatey and Puppet preinstalle
   
   
   
+## LATEST VERSION  
+**0.1 (2018-10-29)**  
+* Microsoft/windowsservercore:1803  
+* Chocolatey 0.10.11  
+* Puppet Agent 6.0.3  
+  
+_uncompressed size: ~300 MB (additional to windowsservercore:1803)_  
+  
+  
+  
 ## DOCKER
 [sperrle/chocopuppet @DockerHub](https://hub.docker.com/r/sperrle/chocopuppet/)  
 `docker pull sperrle/chocopuppet`  
@@ -12,16 +22,6 @@ chocopuppet is a Docker Windows Container with Chocolatey and Puppet preinstalle
 ## DOCKERFILE  
 [Dockerfile @GitHub](https://github.com/sperrle/chocopuppet/blob/master/Dockerfile)  
 [sperrle/chocopuppet @GitHub](https://github.com/sperrle/chocopuppet)  
-  
-  
-  
-## LATEST VERSION  
-**0.1 (2018-10-29)**  
-* Microsoft/windowsservercore:1803  
-* Chocolatey 0.10.11  
-* Puppet Agent 6.0.3  
-  
-_uncompressed size: ~300 MB (additional to windowsservercore:1803)_  
   
   
   
