@@ -4,7 +4,7 @@ chocopuppet is a Docker Windows Container with Chocolatey and Puppet preinstalle
   
   
 ## DOCKER
-[sperrle/chocopuppet @DockerHub](https://hub.docker.com/r/sperrle/chocopuppet/)
+[sperrle/chocopuppet @DockerHub](https://hub.docker.com/r/sperrle/chocopuppet/)  
 `docker pull sperrle/chocopuppet`  
   
   
