@@ -4,8 +4,8 @@ chocopuppet is a Docker Windows Container with Chocolatey and Puppet preinstalle
   
   
 ## DOCKERFILE  
-[Dockerfile @github](https://github.com/sperrle/chocopuppet/blob/master/Dockerfile)  
-  
+[Dockerfile @GitHub](https://github.com/sperrle/chocopuppet/blob/master/Dockerfile)  
+[sperrle/chocopuppet @GitHub](https://github.com/sperrle/chocopuppet)  
   
   
 ## LATEST VERSION  
@@ -56,7 +56,7 @@ run "puppet help agent" for arguments possible
   
 * **Config the puppet service with arguments**  
 `ENV PUPPET_SERVICE=<arguments>`  
-https://docs.microsoft.com/powershell/module/microsoft.powershell.management/set-service  
+[Set-Service @MicrosoftDocs](https://docs.microsoft.com/powershell/module/microsoft.powershell.management/set-service)  
 example: "--State Running" = Set the puppet service to running state  
   	
 * **Enable the Puppet Agent**  
@@ -75,19 +75,17 @@ novalue = Keep state at "manual"
   
 * **Microsoft Windows Server Core (microsoft/windowsservercore)**  
 https://hub.docker.com/r/microsoft/windowsservercore/  
-By using this Supplement, you accept Microsoft License & useterms  
-https://www.microsoft.com/en-us/useterms  
+[Microsoft License & useterms](https://www.microsoft.com/en-us/useterms)  
   
 * **Chocolatey**  
 https://chocolatey.org/  
-Chocolatey is Apache 2.0 licensed  
-https://www.apache.org/licenses/LICENSE-2.0.html  
+[chocolatey @GitHub](https://github.com/chocolatey)  
+[Apache 2.0 Licsense](https://www.apache.org/licenses/LICENSE-2.0.html)  
   
 * **Puppet Agent**  
 https://puppet.com/  
-https://github.com/puppetlabs/puppet/  
-Puppet Agent is Apache 2.0 licensed  
-https://www.apache.org/licenses/LICENSE-2.0.html  
+[puppetlabs/puppet @GitHub](https://github.com/puppetlabs/puppet)  
+[Apache 2.0 Licsense](https://www.apache.org/licenses/LICENSE-2.0.html)  
   
   
   
