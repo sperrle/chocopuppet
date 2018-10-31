@@ -7,7 +7,7 @@
 #
 # URL            : https://hub.docker.com/r/sperrle/chocopuppet/
 #
-# Version        : v0.1 - 2018-10-29
+# Version        : v0.2 - 2018-10-31
 #
 ################################################################################
 #
@@ -20,7 +20,7 @@
 
 
 
-# SET ARG for easy change of version on new build
+# ARG for easy change of version on new build
 ARG OS="windowsservercore"
 ARG VERSION="1803"
 
@@ -34,18 +34,33 @@ SHELL [ "PowerShell.exe", "-NoProfile", "-C", "$ErrorActionPreference='Stop';" ]
 
 
 
-# SET ARG for BUILD
+# ARG
 ARG COPY="/_docker.copy/chocopuppet/"
+ARG DOCKER_ONBUILD=""
+ARG PUPPET_APPLY=""
+ARG PUPPET_EXECUTE=""
+ARG PUPPET_AGENT=""
 
-# COPY what we need to build inside
-COPY copy/build.ps1 copy/_common.ps1 $COPY
+# COPY before build: copy what we need to build inside
+COPY copy/_common.ps1 copy/build.ps1 $COPY
 
 # BUILD
 RUN iex "$ENV:COPY/build.ps1";
 
+# COPY after build: copy all the rest ( the complete directory "copy" ) inside
+COPY copy $COPY
 
 
-# SET ENV
+
+# VOLUME
+## Puppet Agent SSL data
+VOLUME "C:/ProgramData/PuppetLabs/puppet/etc/ssl"
+
+# ONBUILD
+ONBUILD RUN iex "$ENV:COPY/onbuild.ps1";
+ONBUILD VOLUME "C:/ProgramData/PuppetLabs/puppet/etc/ssl"
+
+# ENV
 ENV COPY=$COPY
 ENV \
 DOCKER_ENTRYPOINT="" \
@@ -55,18 +70,8 @@ PUPPET_AGENT="" \
 PUPPET_SERVICE="" \
 PUPPET_ENABLE=""
 
-
-# COPY all the rest ( the complete directory "copy" ) inside
-COPY copy $COPY
-
 # ENTRYPOINT: PowerShell.exe
 ENTRYPOINT [ "PowerShell.exe", "-NoExit", "-NoProfile", "-C", "$ErrorActionPreference='Continue';", "/_docker.copy/chocopuppet/entrypoint.ps1;" ]
-
-
-
-# VOLUME for Puppet Agent SSL data
-VOLUME "C:/ProgramData/PuppetLabs/puppet/etc/ssl"
-ONBUILD VOLUME "C:/ProgramData/PuppetLabs/puppet/etc/ssl"
 
 
 

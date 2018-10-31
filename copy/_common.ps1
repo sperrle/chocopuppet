@@ -7,7 +7,7 @@
 #
 # URL            : https://hub.docker.com/r/sperrle/chocopuppet/
 #
-# Version        : v0.1 - 2018-10-29
+# Version        : v0.2 - 2018-10-31
 #
 ################################################################################
 #
@@ -61,27 +61,28 @@ function header ( $object, $color = (Get-Host).UI.RawUI.ForegroundColor ) {
 # VERIFY
 # depends on: PSEUDO-HTML
 
-function success ( $object, $color = "green" ) {
+function done ( $object ) {
+	$color = "green"
 	br;
 	hr $color;
-	Write-Host -Object $object -NoNewLine -ForegroundColor $color;
-	Write-Host -Object ": successfull" -ForegroundColor $color;
-	br;
-}
-
-function notice ( $object, $color = "yellow" ) {
-	br;
+	Write-Host "Done: " -NoNewLine -ForegroundColor $color;
 	Write-Host -Object $object -ForegroundColor $color;
 	br;
 }
 
-function error ( $object, $color = "red" ) {
+function notice ( $object ) {
+	$color = "yellow"
+	Write-Host "Notice: " -NoNewLine -ForegroundColor $color;
+	Write-Host -Object $object -ForegroundColor $color;
+}
+
+function error ( $object ) {
+	$color = "red"
 	br;
 	hr $color;
-	Write-Host -Object $object -NoNewLine -ForegroundColor $color;
-	Write-Host -Object ": ERROR" -ForegroundColor $color;
+	Write-Host "Error: " -NoNewLine -ForegroundColor $color;
+	Write-Host -Object $object -ForegroundColor $color;
 	br;
-	throw;
 }
 
 function verify ( $object ) {
@@ -89,7 +90,7 @@ function verify ( $object ) {
 	$success = $?;
 
 	if ( $success ) { 
-		success $object; 
+		done $object; 
 	} 
 	else { 
 		error $object; 
@@ -102,7 +103,7 @@ function verify ( $object ) {
 # LOOP
 # depends on: VERIFY
 
-function Invoke-Loop ( $loop ) {
+function Invoke-Loop ( $loop , $erroraction = "throw" ) {
 #example:
 #
 #$loop = @{};
@@ -118,6 +119,7 @@ function Invoke-Loop ( $loop ) {
 #		command		= 'iex ( ( New-Object System.Net.WebClient ).DownloadString("https://chocolatey.org/install.ps1") )';
 #	}
 #}
+
 	if ( ! ( $loop.name ) ) { $loop.name = "Loop"; }
 	if ( ! ( $color = $loop.color ) ) { $color = "yellow"; }
 
@@ -159,9 +161,14 @@ function Invoke-Loop ( $loop ) {
 			Write-Host ( $command ) -ForegroundColor $color;
 			br;
 
-			# invoke command and update path
+			# update path before
+			env_path_machine;
+
+			# invoke command and verify
+			$command = ( $command ) + '; verify ( ( $name ) );';
 			iex $command;
-			verify ( $name );
+			
+			# update path after
 			env_path_machine;
 		}
 		
@@ -169,7 +176,7 @@ function Invoke-Loop ( $loop ) {
 		
 	}
 
-	success $loop.name;
+	done $loop.name;
 	
 }
 

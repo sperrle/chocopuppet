@@ -7,7 +7,7 @@
 #
 # URL            : https://hub.docker.com/r/sperrle/chocopuppet/
 #
-# Version        : v0.1 - 2018-10-29
+# Version        : v0.2 - 2018-10-31
 #
 ################################################################################
 #
@@ -43,79 +43,84 @@ $loop.loop = [ordered]@{}
 
 # Conditional loop
 
-if ( Test-Path "/entrypoint/entrypoint.ps1" ) {
-	$loop.loop['entrypoint'] = @{
-		name		= 'ENTRYPOINT (LOCAL): /entrypoint/entrypoint.ps1';
-		command		= '/entrypoint/entrypoint.ps1';
-		description = 'Call entrypoint script at /entrypoint/entrypoint.ps1';
+$script = "/entrypoint/entrypoint.ps1";
+if ( $script ) {
+	$loop.loop.$script = @{
+		name		= 'SCRIPT: ' + $script;
+		command		= 'If (Test-Path "' + $script + '") { "' + $script + '" } else { notice ( "' + $script + '" + " not found" ); br; return; }';
+		description = 'Call script at ' + $script;
 	}
 }
 	
-if ( Test-Path "/entrypoint/entrypoint.pp" ) { 
-	$loop.loop['manifest'] = @{
-		name		= 'MANIFEST (LOCAL): /entrypoint/entrypoint.pp';
-		command		= 'puppet apply /entrypoint/entrypoint.pp';
-		description = 'Apply manifest from /entrypoint/entrypoint.pp';
+$puppet_apply = "/entrypoint/entrypoint.pp";
+if ( $puppet_apply ) {
+	$loop.loop.$puppet_apply = @{
+		name		= 'PUPPET APPLY: ' + $puppet_apply;
+		command		= 'If (Test-Path "' + $puppet_apply + '") { puppet apply "' + $puppet_apply + '" } else { notice ( "' + $puppet_apply + '" + " not found" ); br; return; }';
+		description = 'Puppet apply ' + $puppet_apply;
 	}
 }
 
-if ( $ENV:DOCKER_ENTRYPOINT ) { 
-	$loop.loop['entrypoint-env'] = @{
-		name		= 'DOCKER ENTRYPOINT (ENV)';
-		command		= 'if ( Test-Path "$ENV:DOCKER_ENTRYPOINT" ) { $ENV:DOCKER_ENTRYPOINT } else { error ("$ENV:DOCKER_ENTRYPOINT not found"); }';
-		description = 'Call entrypoint script at $ENV:DOCKER_ENTRYPOINT: ' + "`n" + $ENV:DOCKER_ENTRYPOINT;
+$script = "$ENV:DOCKER_ENTRYPOINT";
+if ( $script ) {
+	$loop.loop.$script = @{
+		name		= 'SCRIPT: ' + $script;
+		command		= 'If (Test-Path "' + $script + '") { "' + $script + '" } else { notice ( "' + $script + '" + " not found" ); br; return; }';
+		description = 'Call script at ' + $script;
 	}
 }
 
-if ( $ENV:PUPPET_APPLY ) { 
-	$loop.loop['puppet-apply'] = @{
-		name		= 'PUPPET APPLY (ENV)';
-		command		= 'if ( Test-Path "$ENV:PUPPET_APPLY" ) { puppet apply $ENV:PUPPET_APPLY } else { error ("$ENV:PUPPET_APPLY not found"); }';
-		description = 'Apply manifest from $ENV:PUPPET_APPLY: ' + "`n" + $ENV:PUPPET_APPLY;
+$puppet_apply = $ENV:PUPPET_APPLY;
+if ( $puppet_apply ) {
+	$loop.loop.$puppet_apply = @{
+		name		= 'PUPPET APPLY: ' + $puppet_apply;
+		command		= 'If (Test-Path "' + $puppet_apply + '") { puppet apply "' + $puppet_apply + '" } else { notice ( "' + $puppet_apply + '" + " not found" ); br; return; }';
+		description = 'Puppet apply ' + $puppet_apply;
 	}
 }
 
-if ( $ENV:PUPPET_EXECUTE ) { 
-	$command = 'puppet apply ' + $ENV:PUPPET_EXECUTE;
-	$loop.loop['puppet-exec'] = @{
-		name		= 'PUPPET EXECUTE (ENV)';
-		command		= $command;
-		description = 'Run puppet apply --execute using arguments from $ENV:PUPPET_EXECUTE: ' + "`n" + $ENV:PUPPET_EXECUTE;
-	}
-}
 
-if ( $ENV:PUPPET_AGENT ) { 
-	$command = 'puppet agent ' + $ENV:PUPPET_AGENT;
+$puppet_execute = $ENV:PUPPET_EXECUTE;
+if ( $puppet_execute ) { 
+	$loop.loop['puppet-execute' ] = @{
+		name		= 'PUPPET EXECUTE: ' + $puppet_execute;
+		command		= 'puppet execute ' + $puppet_execute;
+		description = 'Puppet execute ' + $puppet_execute;
+	}
+};
+
+$puppet_agent = $ENV:PUPPET_AGENT;
+if ( $puppet_agent ) { 
 	$loop.loop['puppet-agent'] = @{
-		name		= 'PUPPET AGENT (ENV)';
-		command		= $command;
-		description = 'Run puppet agent using arguments from $ENV:PUPPET_AGENT: ' + "`n" + $ENV:PUPPET_AGENT;
+		name		= 'PUPPET AGENT: ' + $puppet_agent;
+		command		= 'puppet agent ' + $puppet_agent;
+		description = 'Puppet agent ' + $puppet_agent;
 	}
-}
+};
 
-if ( $ENV:PUPPET_SERVICE ) { 
-	$command = 'Set-Service -Name puppet ' + $ENV:PUPPET_SERVICE;
+$puppet_service = $ENV:PUPPET_SERVICE;
+if ( $puppet_service ) { 
 	$loop.loop['puppet-service'] = @{
-		name		= 'PUPPET SERVICE (ENV)';
-		command		= $command;
-		description = 'Run Set-Service using arguments from $ENV:PUPPET_SERVICE: ' + "`n" + $ENV:PUPPET_SERVICE;
+		name		= 'PUPPET SERVICE: ' + $puppet_service;
+		command		= 'Set-Service puppet ' + $puppet_service;
+		description = 'Set-Service puppet ' + $puppet_service;
 	}
-}
+};
 
-if ( $ENV:PUPPET_ENABLE ) { 
-	$command = 'puppet agent --enable';
+$puppet_enable = $ENV:PUPPET_enable;
+if ( $puppet_enable ) { 
 	$loop.loop['puppet-enable'] = @{
-		name		= 'PUPPET ENABLE (ENV)';
-		command		= $command;
-		description = 'Enable puppet agent ($ENV:PUPPET_ENABLE is present)';
+		name		= 'PUPPET enable: ' + $puppet_enable;
+		command		= 'puppet enable ' + $puppet_enable;
+		description = 'Puppet enable ' + $puppet_enable;
 	}
-}
+};
 
 
 
 # Invoke loop
 
-Invoke-Loop $loop;
+Invoke-Loop $loop, " ";
 
 
 
