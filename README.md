@@ -1,98 +1,98 @@
-# SPERRLE/CHOCOPUPPET
-chocopuppet is a Docker Windows Container with Chocolatey and Puppet preinstalled;
+# SPERRLE/CHOCOPUPPET<br/>
+chocopuppet is a Docker Windows Container with Chocolatey and Puppet preinstalled<br/>
 
 
 
-## DOCKERFILE
-[Dockerfile @github](https://github.com/sperrle/chocopuppet/blob/master/Dockerfile);
+## DOCKERFILE<br/>
+[Dockerfile @github](https://github.com/sperrle/chocopuppet/blob/master/Dockerfile)<br/>
 
 
 
-## LATEST VERSION
-**0.1 (2018-10-29)**
-* Microsoft/windowsservercore:1803;
-* Chocolatey 0.10.11;
-* Puppet Agent 6.0.3;
+## LATEST VERSION<br/>
+**0.1 (2018-10-29)**<br/>
+* Microsoft/windowsservercore:1803<br/>
+* Chocolatey 0.10.11<br/>
+* Puppet Agent 6.0.3<br/>
 
-_uncompressed size: ~300 MB (additional to windowsservercore:1803)_;
-
-
-
-## SHELL
-`PowerShell.exe -NoExit -NoProfile -C`  
+_uncompressed size: ~300 MB (additional to windowsservercore:1803)_<br/>
 
 
 
-## VOLUME 
+## SHELL<br/>
+`PowerShell.exe -NoExit -NoProfile -C`<br/>
 
-* **C:\ProgramData\PuppetLabs\puppet\etc\ssl**
-ONBUILD  
-Puppet Agent SSL data  
 
-## ENTRYPOINT
 
-Based on the environment variables set,  
-the container will try to do the following in that particular order.
+## VOLUME<br/>
 
-* **Run other entrypoint script**
-if provided on location C:\entrypoint\entrypoint.ps1
+* **C:\ProgramData\PuppetLabs\puppet\etc\ssl**<br/>
+ONBUILD<br/>
+Puppet Agent SSL data<br/>
 
-* **Apply a puppet manifest**
-if provided on location C:\entrypoint\entrypoint.pp
+## ENTRYPOINT<br/>
 
-* **Run other Script**
-`ENV DOCKER_ENTRYPOINT=<file>`
+Based on the environment variables set,<br/>
+the container will try to do the following in that particular order.<br/>
 
-* **Apply puppet manifest**
-`ENV PUPPET_APPLY=<file>`
+* **Run other entrypoint script**<br/>
+if provided on location C:\entrypoint\entrypoint.ps1<br/>
 
-* **Execute puppet command**
-`ENV PUPPET_EXECUTE=<string>`
+* **Apply a puppet manifest**<br/>
+if provided on location C:\entrypoint\entrypoint.pp<br/>
 
-* **Run the Agent with arguments**
-`ENV PUPPET_AGENT=<arguments>`  
-example: "--test --onetime" = Connect to puppet server and run once  
-run "puppet help agent" for arguments possible
+* **Run other Script**<br/>
+`ENV DOCKER_ENTRYPOINT=<file>`<br/>
 
-* **Config the puppet service with arguments**
-`ENV PUPPET_SERVICE=<arguments>`  
-https://docs.microsoft.com/powershell/module/microsoft.powershell.management/set-service
-example: "--State Running" = Set the puppet service to running state
+* **Apply puppet manifest**<br/>
+`ENV PUPPET_APPLY=<file>`<br/>
+
+* **Execute puppet command**<br/>
+`ENV PUPPET_EXECUTE=<string>`<br/>
+
+* **Run the Agent with arguments**<br/>
+`ENV PUPPET_AGENT=<arguments>`<br/>
+example: "--test --onetime" = Connect to puppet server and run once<br/>
+run "puppet help agent" for arguments possible<br/>
+
+* **Config the puppet service with arguments**<br/>
+`ENV PUPPET_SERVICE=<arguments>`<br/>
+https://docs.microsoft.com/powershell/module/microsoft.powershell.management/set-service<br/>
+example: "--State Running" = Set the puppet service to running state<br/>
 	
-* **Enable the Puppet Agent**
-`ENV PUPPET_ENABLE=<anyvalue>`\
-anyvalue = Enable the puppet agent\
-novalue = Keep state at "manual"
+* **Enable the Puppet Agent**<br/>
+`ENV PUPPET_ENABLE=<anyvalue>`\<br/>
+anyvalue = Enable the puppet agent\<br/>
+novalue = Keep state at "manual"<br/>
 
 
 
-## CMD
-* **no CMD set**
+## CMD<br/>
+* **no CMD set**<br/>
 
 
 
-## LICENSE
+## LICENSE<br/>
 
-* **Microsoft Windows Server Core (microsoft/windowsservercore)**
-https://hub.docker.com/r/microsoft/windowsservercore/
-By using this Supplement, you accept Microsoft License & useterms
-https://www.microsoft.com/en-us/useterms
+* **Microsoft Windows Server Core (microsoft/windowsservercore)**<br/>
+https://hub.docker.com/r/microsoft/windowsservercore/<br/>
+By using this Supplement, you accept Microsoft License & useterms<br/>
+https://www.microsoft.com/en-us/useterms<br/>
 
-* **Chocolatey**
-https://chocolatey.org/
-Chocolatey is Apache 2.0 licensed
-https://www.apache.org/licenses/LICENSE-2.0.html
+* **Chocolatey**<br/>
+https://chocolatey.org/<br/>
+Chocolatey is Apache 2.0 licensed<br/>
+https://www.apache.org/licenses/LICENSE-2.0.html<br/>
 
-* **Puppet Agent**
-https://puppet.com/
-https://github.com/puppetlabs/puppet/
-Puppet Agent is Apache 2.0 licensed
-https://www.apache.org/licenses/LICENSE-2.0.html
+* **Puppet Agent**<br/>
+https://puppet.com/<br/>
+https://github.com/puppetlabs/puppet/<br/>
+Puppet Agent is Apache 2.0 licensed<br/>
+https://www.apache.org/licenses/LICENSE-2.0.html<br/>
 
 
 
-## CREDITS
+## CREDITS<br/>
 
-* **Manuel Sperrle**
-chocopuppet@sperrle-it.de
-https://www.sperrle-it.de
+* **Manuel Sperrle**<br/>
+chocopuppet@sperrle-it.de<br/>
+https://www.sperrle-it.de<br/>
