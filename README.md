@@ -87,12 +87,12 @@ https://hub.docker.com/r/microsoft/windowsservercore/
 * **Chocolatey**  
 https://chocolatey.org/  
 [chocolatey @GitHub](https://github.com/chocolatey)  
-[Apache 2.0 Licsense](https://www.apache.org/licenses/LICENSE-2.0.html)  
+[Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0.html)  
   
 * **Puppet Agent**  
 https://puppet.com/  
 [puppetlabs/puppet @GitHub](https://github.com/puppetlabs/puppet)  
-[Apache 2.0 Licsense](https://www.apache.org/licenses/LICENSE-2.0.html)  
+[Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0.html)  
   
   
   
